@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\Auth\LoginController;
 use App\Http\Controllers\Api\Auth\LogoutController;
 use App\Http\Controllers\Api\Auth\RegisterController;
+use App\Http\Controllers\Api\PropertyController;
 use App\Http\Controllers\Api\TenantController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -27,6 +28,15 @@ Route::post('/login', [LoginController::class, 'login']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [LogoutController::class, 'logout']);
+
+
+    //properties routes
+    Route::get('/properties', [PropertyController::class, 'index']);
+    Route::post('/properties', [PropertyController::class, 'store']);
+    Route::get('/properties/{id}', [PropertyController::class, 'show']);
+    Route::put('/properties/{id}', [PropertyController::class, 'update']);
+    Route::delete('/properties/{id}', [PropertyController::class, 'destroy']);
+    Route::get('/properties/{id}/rent-distribution', [PropertyController::class, 'rentDistribution']);
 
     //tenant routes
     Route::get('/tenants', [TenantController::class, 'index']);
