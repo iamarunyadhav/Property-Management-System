@@ -30,9 +30,9 @@ class TenantController extends Controller
         return response()->json($tenant, 201);
     }
 
-    public function show(string $tenant_id)
+    public function show(string $id)
     {
-        $tenant = Tenant::find($tenant_id);
+        $tenant = Tenant::with('property')->find($id);
 
         if (!$tenant) {
             return response()->json(['error' => 'Tenant not found'], 404);
@@ -41,9 +41,9 @@ class TenantController extends Controller
         return response()->json($tenant);
     }
 
-    public function update(Request $request, string $tenant_id)
+    public function update(Request $request, string $id)
     {
-        $tenant = Tenant::find($tenant_id);
+        $tenant = Tenant::find($id);
 
         if (!$tenant) {
             return response()->json(['error' => 'Tenant not found'], 404);
@@ -51,7 +51,7 @@ class TenantController extends Controller
 
         $validated = $request->validate([
             'name' => 'sometimes|required|string',
-            'email' => 'sometimes|required|email|unique:tenants,email,' . $tenant_id,
+            'email' => 'sometimes|required|email|unique:tenants,email,' . $id,
             'phone_number' => 'sometimes|required|string',
             'property_id' => 'sometimes|required|exists:properties,id',
             'agreement_percentage' => 'sometimes|nullable|numeric|min:0|max:100',

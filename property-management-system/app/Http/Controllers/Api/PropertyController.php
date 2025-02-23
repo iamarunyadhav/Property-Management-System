@@ -14,7 +14,7 @@ class PropertyController extends Controller
     {
         // return response(Property::with('tenants')->get(),200);
 
-        $query = Property::with('tenants');
+        $query = Property::with('tenants')->where('owner_id', auth()->id());
 
           //filter the property with their name
             if ($request->has('name')) {
@@ -70,6 +70,7 @@ class PropertyController extends Controller
         }
 
         $property->update($request->only(['name', 'address', 'rent_amount']));
+
         return response()->json(['message' => 'Property updated successfully']);
     }
 
@@ -118,10 +119,33 @@ class PropertyController extends Controller
             $rentDetails[] = [
                 'name' => $tenant->name,
                 'rent_share' => $share,
-                //no logics given for late fee default value
+                //no logics given for late_fee default value
                 'late_fee' => 0
             ];
         }
         return response()->json(['total_rent' => $totalRent,'property_name' => $property_name, 'tenants' => $rentDetails]);
+    }
+
+
+    //if needed public listing and advertsising
+
+    public function publicListing(Request $request)
+    {
+
+        $query = Property::select(['id', 'name', 'address', 'rent_amount'])->get();
+
+            if ($request->has('name')) {
+                $query->where('name', 'LIKE', "%{$request->name}%");
+            }
+
+            if ($request->has('rent_min')) {
+                $query->where('rent_amount', '>=', $request->rent_min);
+            }
+
+            if ($request->has('rent_max')) {
+                $query->where('rent_amount', '<=', $request->rent_max);
+            }
+
+            return response()->json($query, 200);
     }
 }

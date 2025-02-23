@@ -26,6 +26,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('/register', [RegisterController::class, 'register']);
 Route::post('/login', [LoginController::class, 'login']);
 
+//public listing if needed show properties
+Route::get('/public/properties', [PropertyController::class, 'publicListing']);
+
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [LogoutController::class, 'logout']);
 
@@ -40,8 +43,9 @@ Route::middleware('auth:sanctum')->group(function () {
 
     //tenant routes
     Route::get('/tenants', [TenantController::class, 'index']);
-    Route::get('/tenants/{tenant_id}', [TenantController::class, 'show']);
+    Route::get('/tenants/{id}', [TenantController::class, 'show']);
     Route::post('/tenants', [TenantController::class, 'store']);
-    Route::put('/tenants/{tenant_id}', [TenantController::class, 'update']);
-    Route::delete('/tenants/{tenant_id}', [TenantController::class, 'destroy']);
+    Route::put('/tenants/{id}', [TenantController::class, 'update']);
+    Route::delete('/tenants/{id}', [TenantController::class, 'destroy']);
 });
+
