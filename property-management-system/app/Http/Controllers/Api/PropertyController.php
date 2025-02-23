@@ -14,24 +14,24 @@ class PropertyController extends Controller
     {
         // return response(Property::with('tenants')->get(),200);
 
-        $query = Property::with('tenants')->where('owner_id', auth()->id());
+        $property = Property::with('tenants')->where('owner_id', auth()->id())->get();
 
           //filter the property with their name
             if ($request->has('name')) {
-                $query->where('name', 'LIKE', "%{$request->name}%");
+                $property->where('name', 'LIKE', "%{$request->name}%");
             }
 
             //filter the property with their rent amount range minimum
             if ($request->has('rent_min')) {
-                $query->where('rent_amount', '>=', $request->rent_min);
+                $property->where('rent_amount', '>=', $request->rent_min);
             }
 
             //filter the property with their amount range maximum
             if ($request->has('rent_max')) {
-                $query->where('rent_amount', '<=', $request->rent_max);
+                $property->where('rent_amount', '<=', $request->rent_max);
             }
 
-            return response()->json($query->get(), 200);
+            return response()->json($property, 200);
     }
 
     public function store(Request $request)
@@ -132,20 +132,20 @@ class PropertyController extends Controller
     public function publicListing(Request $request)
     {
 
-        $query = Property::select(['id', 'name', 'address', 'rent_amount'])->get();
+        $property = Property::select(['id', 'name', 'address', 'rent_amount'])->get();
 
             if ($request->has('name')) {
-                $query->where('name', 'LIKE', "%{$request->name}%");
+                $property->where('name', 'LIKE', "%{$request->name}%");
             }
 
             if ($request->has('rent_min')) {
-                $query->where('rent_amount', '>=', $request->rent_min);
+                $property->where('rent_amount', '>=', $request->rent_min);
             }
 
             if ($request->has('rent_max')) {
-                $query->where('rent_amount', '<=', $request->rent_max);
+                $property->where('rent_amount', '<=', $request->rent_max);
             }
 
-            return response()->json($query, 200);
+            return response()->json($property, 200);
     }
 }

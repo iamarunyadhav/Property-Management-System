@@ -11,8 +11,13 @@ class TenantController extends Controller
 
     public function index()
     {
-        // Tenant::all();
-        $tenantDetails=Tenant::with('property')->get();
+        // $tenantDetails=Tenant::with('property')->where('owner_id', auth()->id())->get();
+        $tenantDetails = Tenant::with('property')->whereHas('property', function ($query)
+         {
+            $query->where('owner_id', auth()->id());
+         })->get();
+
+
         return response()->json($tenantDetails, 200);
     }
 
@@ -71,5 +76,46 @@ class TenantController extends Controller
 
         $tenant->delete();
         return response()->json(['message' => 'Tenant removed successfully'], 200);
+    }
+
+    public function getMonthlyRent($id)
+    {
+        // Fetch tenant by ID with selected fields only
+        $tenant = Tenant::with('property')->where('id', $id)->first();
+
+        if (!$tenant) {
+            return response()->json(['message' => 'Tenant not found'], 404);
+        }
+
+        $property = $tenant->property;
+
+        if (!$property) {
+            return response()->json(['error' => 'Property not found for this tenant'], 404);
+        }
+
+        $totalRent = $property->rent_amount;
+        $tenants = $property->tenants;
+
+        if ($tenants->count() === 0) {
+            return response()->json(['error' => 'No tenants available for rent distribution'], 400);
+        }
+
+        $defaultShare = round($totalRent / $tenants->count(), 2);
+
+        // Calculate the rent share for the specific tenant
+        if ($tenant->agreement_percentage) {
+            // Rent is calculated based on the agreement percentage
+            $monthlyRent = ($tenant->agreement_percentage / 100) * $totalRent;
+        } else {
+            // Rent is equally divided
+            $monthlyRent = $defaultShare;
+        }
+
+        return response()->json([
+            'tenant_id' => $tenant->id,
+            'name' => $tenant->name,
+            'monthly_rent' => $monthlyRent
+        ], 200);
+
     }
 }
