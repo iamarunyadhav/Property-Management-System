@@ -2,76 +2,49 @@
 
 namespace App\Repositories;
 
-use App\Models\Property;
 use App\Models\Tenant;
 
 class TenantRepository
 {
-    public function getAllTenants()
+    public function getAllTenants($userId)
     {
-        return Tenant::with('property')->whereHas('property', function ($query) {
-            $query->where('owner_id', auth()->id());
-        })->get();
+        return Tenant::with('property')
+            ->whereHas('property', function($query) use ($userId) {
+                // Filter tenants by property owner
+                $query->where('owner_id', $userId);
+            })
+            ->paginate(10); // paginate for improvements to show the results (improvements)
     }
 
-    public function findTenant($id)
+    public function findById($id, $userId)
     {
-        return Tenant::with('property')->whereHas('property', function ($query) {
-            $query->where('owner_id', auth()->id());
-        })->find($id);
+        return Tenant::whereHas('property', fn($query) => $query->where('owner_id', $userId))
+                     ->where('id', $id)
+                     ->first();
     }
 
-    public function createTenant(array $data)
+    //custom function for find by tenant id's
+    public function findRentById($ids, $userId)
+    {
+        return Tenant::whereHas('property', fn($query) => $query->where('owner_id', $userId))
+                 ->whereIn('id', (array) $ids) // Ensures single values are converted to an array
+                 ->get();
+    }
+
+    public function create(array $data)
     {
         return Tenant::create($data);
     }
 
-    public function updateTenant(Tenant $tenant, array $data)
+    public function update(Tenant $tenant, array $data)
     {
-        $tenant->update($data);
-        return $tenant;
+        return $tenant->update($data);
     }
 
-    public function deleteTenant(Tenant $tenant)
+    public function delete(Tenant $tenant)
     {
         return $tenant->delete();
     }
-
-    public function rentDistribution($propertyId)
-    {
-        $property = Property::with('tenants')->find($propertyId);
-
-        if (!$property) {
-            return ['error' => 'Property not found', 'status' => 404];
-        }
-
-        $totalRent = $property->rent_amount;
-        $tenants = $property->tenants;
-        $propertyName = $property->name;
-
-        if ($tenants->count() === 0) {
-            return ['error' => 'No tenants available for rent distribution', 'status' => 400];
-        }
-
-        $defaultShare = round($totalRent / $tenants->count(), 2);
-        $rentDetails = [];
-
-        foreach ($tenants as $tenant) {
-            $share = $tenant->agreement_percentage
-                ? ($tenant->agreement_percentage / 100) * $totalRent
-                : $defaultShare;
-
-            $rentDetails[] = [
-                'name' => $tenant->name,
-                'rent_share' => round($share, 2),
-                'late_fee' => 0, // Default value, can be modified based on additional logic
-            ];
-        }
-
-        return [
-            'total_rent' => $totalRent,
-            'property_name' => $propertyName,
-            'tenants' => $rentDetails
-        ];
-    }
 }
+
+?>

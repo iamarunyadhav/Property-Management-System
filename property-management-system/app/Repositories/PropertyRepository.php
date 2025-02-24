@@ -1,31 +1,32 @@
 <?php
-
 namespace App\Repositories;
 
 use App\Models\Property;
 
 class PropertyRepository
 {
-    public function getAll($filters = [])
+    public function getAllProperties($filters, $userId)
     {
-        $query = Property::with('tenants')->where('owner_id', auth()->id());
+        $query = Property::with('tenants')->where('owner_id', $userId);
 
-        if (!empty($filters['name'])) {
+        if (isset($filters['name'])) {
             $query->where('name', 'LIKE', "%{$filters['name']}%");
         }
-        if (!empty($filters['rent_min'])) {
+
+        if (isset($filters['rent_min'])) {
             $query->where('rent_amount', '>=', $filters['rent_min']);
         }
-        if (!empty($filters['rent_max'])) {
+
+        if (isset($filters['rent_max'])) {
             $query->where('rent_amount', '<=', $filters['rent_max']);
         }
 
-        return $query->get();
+        return $query->paginate(10);
     }
 
-    public function findById($id)
+    public function findById($id, $userId)
     {
-        return Property::with('tenants')->where('owner_id', auth()->id())->find($id);
+        return Property::with('tenants')->where('owner_id', $userId)->find($id);
     }
 
     public function create(array $data)
@@ -35,8 +36,7 @@ class PropertyRepository
 
     public function update(Property $property, array $data)
     {
-        $property->update($data);
-        return $property;
+        return $property->update($data);
     }
 
     public function delete(Property $property)
@@ -44,42 +44,25 @@ class PropertyRepository
         return $property->delete();
     }
 
-
-    public function rentDistribution($propertyId)
+    public function getPublicProperties($filters)
     {
-        $property = Property::with('tenants')->find($propertyId);
+        $query = Property::select(['id', 'name', 'address', 'rent_amount']);
 
-        if (!$property) {
-            return ['error' => 'Property not found', 'status' => 404];
+        if (isset($filters['name'])) {
+            $query->where('name', 'LIKE', "%{$filters['name']}%");
         }
 
-        $totalRent = $property->rent_amount;
-        $tenants = $property->tenants;
-        $propertyName = $property->name;
-
-        if ($tenants->count() === 0) {
-            return ['error' => 'No tenants available for rent distribution', 'status' => 400];
+        if (isset($filters['rent_min'])) {
+            $query->where('rent_amount', '>=', $filters['rent_min']);
         }
 
-        $defaultShare = round($totalRent / $tenants->count(), 2);
-        $rentDetails = [];
-
-        foreach ($tenants as $tenant) {
-            $share = $tenant->agreement_percentage
-                ? ($tenant->agreement_percentage / 100) * $totalRent
-                : $defaultShare;
-
-            $rentDetails[] = [
-                'name' => $tenant->name,
-                'rent_share' => round($share, 2),
-                'late_fee' => 0, // Default value, can be modified based on additional logic
-            ];
+        if (isset($filters['rent_max'])) {
+            $query->where('rent_amount', '<=', $filters['rent_max']);
         }
 
-        return [
-            'total_rent' => $totalRent,
-            'property_name' => $propertyName,
-            'tenants' => $rentDetails
-        ];
+        return $query->paginate(10);
     }
 }
+
+
+?>

@@ -3,129 +3,117 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Tenant;
+use App\Http\Resources\TenantResource;
+use App\Services\TenantService;
+use App\Helpers\ApiResponse;
+use App\Models\Property;
+use Dotenv\Exception\ValidationException;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException as ValidationValidationException;
 
 class TenantController extends Controller
 {
+    protected $tenantService;
+
+    public function __construct(TenantService $tenantService)
+    {
+        $this->tenantService = $tenantService;
+    }
 
     public function index()
     {
-        $tenantDetail = Tenant::with('property')->whereHas('property', function ($query)
-         {
-            $query->where('owner_id', auth()->id());
-         });
+        $tenants = $this->tenantService->getAllTenants();
+        return ApiResponse::success('Tenants retrieved successfully.', TenantResource::collection($tenants));
+    }
 
-         //paginate for large data
-         $tenantDetails = $tenantDetail->paginate(10);
+    public function show($id)
+    {
+        $tenant = $this->tenantService->getTenantById($id);
 
-        return response()->json($tenantDetails, 200);
+        if (!$tenant) {
+            return ApiResponse::error('Tenant not found.', 404);
+        }
+
+        return ApiResponse::success('Tenant retrieved successfully.', new TenantResource($tenant));
     }
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'name' => 'required|string',
-            'email' => 'required|email|unique:tenants',
-            'phone_number' => 'required|string',
-            'property_id' => 'required|exists:properties,id',
-            'agreement_percentage' => 'nullable|numeric|min:0|max:100',
-        ]);
 
-        $tenant = Tenant::create($validated);
-        return response()->json($tenant, 201);
+        try {
+            $validated = $request->validate([
+                'name' => 'required|string',
+                'email' => 'required|email|unique:tenants',
+                'phone_number'=> 'required|string',
+                'property_id'=> 'required|exists:properties,id',
+                'agreement_percentage'=> 'nullable|numeric|min:0|max:100',
+            ]);
+           } catch (ValidationValidationException $e) {
+              return ApiResponse::error($e->validator->errors()->toArray(), 422);
+           }
+
+        $property = Property::where('id', $validated['property_id'])
+        ->where('owner_id', auth()->id())
+        ->first();
+
+        if (!$property) {
+            return ApiResponse::error('Unauthorized: You can only assign tenants to your own properties.', 403);
+        }
+        $tenant = $this->tenantService->createTenant($validated);
+        return ApiResponse::success('Tenant created successfully.', new TenantResource($tenant), 201);
     }
 
-    public function show(string $id)
+    public function update(Request $request, $id)
     {
-
-        $tenant = Tenant::whereHas('property', function ($query) {
-            $query->where('owner_id', auth()->id());
-        })->where('id', $id)->first();
-
-        if (!$tenant) {
-            return response()->json(['error' => 'Tenant not found or unauthorized'], 404);
-        }
-
-        return response()->json($tenant);
-    }
-
-    public function update(Request $request, string $id)
-    {
-        $tenant = Tenant::whereHas('property', function ($query) {
-            $query->where('owner_id', auth()->id());
-        })->where('id', $id)->first();
-
-        if (!$tenant) {
-            return response()->json(['error' => 'Tenant not found or unauthorized'], 404);
-        }
-
-        $validated = $request->validate([
-            'name' => 'sometimes|required|string',
-            'email' => 'sometimes|required|email|unique:tenants,email,' . $id,
-            'phone_number' => 'sometimes|required|string',
-            'property_id' => 'sometimes|required|exists:properties,id',
+        $data = $request->validate([
+            'name'               => 'sometimes|required|string',
+            'email'              => 'sometimes|required|email|unique:tenants,email,' . $id,
+            'phone_number'       => 'sometimes|required|string',
+            'property_id'        => 'sometimes|required|exists:properties,id',
             'agreement_percentage' => 'sometimes|nullable|numeric|min:0|max:100',
         ]);
 
-        $tenant->update($validated);
-        return response()->json(['message' => 'Tenant updated successfully', 'tenant' => $tenant], 200);
-    }
-
-    public function destroy(string $id)
-    {
-        $tenant = Tenant::whereHas('property', function ($query) {
-            $query->where('owner_id', auth()->id());
-        })->where('id', $id)->first();
+        $tenant = $this->tenantService->updateTenant($id, $data);
 
         if (!$tenant) {
-            return response()->json(['error' => 'Tenant not found or unauthorized'], 404);
+            return ApiResponse::error('Tenant not found or unauthorized.', 404);
         }
 
-        $tenant->delete();
-
-        return response()->json(['message' => 'Tenant removed successfully'], 200);
+        return ApiResponse::success('Tenant updated successfully.', new TenantResource($tenant));
     }
 
-    public function getMonthlyRent(int $id)
+    public function destroy($id)
     {
-        // Fetch tenant by ID with selected fields only
+        $deleted = $this->tenantService->deleteTenant($id);
 
-        $tenant = Tenant::whereHas('property', function ($query) {
-            $query->where('owner_id', auth()->id());
-        })->where('id', $id)->first();
-        // $tenant = Tenant::with('property')->where('id', $id)->first();
-
-        if (!$tenant) {
-            return response()->json(['message' => 'Tenant not found or Unauthorized'], 404);
+        if (!$deleted) {
+            return ApiResponse::error('Tenant not found or unauthorized.', 404);
         }
 
-        $property = $tenant->property;
-        $tenants = $property->tenants;
-
-        if ($tenants->isEmpty()) {
-            return response()->json(['error' => 'No tenants available for rent distribution'], 400);
-        }
-
-        $totalRent = $property->rent_amount;
-        $defaultShare = round($totalRent / $tenants->count(), 2);
-
-        // Calculate the rent share for the specific tenant
-        if ($tenant->agreement_percentage) {
-            // Rent is calculated based on the agreement percentage
-            $monthlyRent = ($tenant->agreement_percentage / 100) * $totalRent;
-        } else {
-            // Rent is equally divided
-            $monthlyRent = $defaultShare;
-        }
-
-        return response()->json([
-            'tenant_id' => $tenant->id,
-            'name' => $tenant->name,
-            'monthly_rent' => $monthlyRent
-        ], 200);
-
+        return ApiResponse::success('Tenant deleted successfully.');
     }
+
+    public function getMonthlyRent($id)
+    {
+
+        $tenantIds = strpos($id, ',') !== false ? explode(',', $id) : [$id];
+
+        // Convert string values to integers and remove invalid values
+        $tenantIds = array_filter(array_map('intval', $tenantIds));
+
+        if (empty($tenantIds)) {
+            return ApiResponse::error('Invalid tenant IDs provided.', 400);
+        }
+        $data = $this->tenantService->getMonthlyRent($tenantIds);
+
+        if (!$data) {
+            return ApiResponse::error('Tenant not found or unauthorized.', 404);
+        }
+
+        return ApiResponse::success('Tenant monthly rent retrieved successfully.', $data);
+    }
+
 }
+
 
 ?>
