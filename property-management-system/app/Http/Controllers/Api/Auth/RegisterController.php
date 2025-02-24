@@ -49,8 +49,9 @@ class RegisterController extends Controller
 
             return response()->json([
                 'status' => true,
-                'message' => 'User created successfully',
-                'token' => $user->createToken("API TOKEN")->plainTextToken
+                'message' => 'User created successfully'
+                //based on the requirement , you can return the user data or a token
+                // 'token' => $user->createToken("API TOKEN")->plainTextToken
             ], 201);
 
         } catch (\Throwable $th) {

@@ -37,10 +37,10 @@ class TenantController extends Controller
 
     public function show(string $id)
     {
-        $tenant = Tenant::with('property')->find($id);
+        $tenant = Tenant::with('property')->where('owner_id', auth()->id())->find($id);
 
         if (!$tenant) {
-            return response()->json(['error' => 'Tenant not found'], 404);
+            return response()->json(['error' => 'Tenant not found or unauthorized'], 404);
         }
 
         return response()->json($tenant);
@@ -48,10 +48,12 @@ class TenantController extends Controller
 
     public function update(Request $request, string $id)
     {
-        $tenant = Tenant::find($id);
+        $tenant = Tenant::whereHas('property', function ($query) {
+            $query->where('owner_id', auth()->id());
+        })->where('id', $id)->first();
 
         if (!$tenant) {
-            return response()->json(['error' => 'Tenant not found'], 404);
+            return response()->json(['error' => 'Tenant not found or unauthorized'], 404);
         }
 
         $validated = $request->validate([
@@ -66,19 +68,22 @@ class TenantController extends Controller
         return response()->json(['message' => 'Tenant updated successfully', 'tenant' => $tenant], 200);
     }
 
-    public function destroy(string $tenant_id)
+    public function destroy(string $id)
     {
-        $tenant = Tenant::find($tenant_id);
+        $tenant = Tenant::whereHas('property', function ($query) {
+            $query->where('owner_id', auth()->id());
+        })->where('id', $id)->first();
 
         if (!$tenant) {
-            return response()->json(['error' => 'Tenant not found'], 404);
+            return response()->json(['error' => 'Tenant not found or unauthorized'], 404);
         }
 
         $tenant->delete();
+
         return response()->json(['message' => 'Tenant removed successfully'], 200);
     }
 
-    public function getMonthlyRent($id)
+    public function getMonthlyRent(int $id)
     {
         // Fetch tenant by ID with selected fields only
         $tenant = Tenant::with('property')->where('id', $id)->first();
@@ -119,3 +124,5 @@ class TenantController extends Controller
 
     }
 }
+
+?>

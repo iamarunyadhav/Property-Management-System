@@ -12,6 +12,8 @@ class PropertyController extends Controller
 
     public function index(Request $request)
     {
+
+        //Todo pagination add
         // return response(Property::with('tenants')->get(),200);
 
         $property = Property::with('tenants')->where('owner_id', auth()->id())->get();
@@ -36,19 +38,21 @@ class PropertyController extends Controller
 
     public function store(Request $request)
     {
+        //Todo validation need to check address
         $validated = $request->validate([
             'name' => 'required|string',
             'address' => 'required|string',
             'rent_amount' => 'required|numeric',
         ]);
 
+        //only owner create the property
         return Property::create(array_merge($validated, ['owner_id' => auth()->id()]));
     }
 
     public function show(string $id)
     {
-        //eager loading
-        $property = Property::with('tenants')->find($id);
+        //eager loading with authorized user their tenanats details only
+        $property = Property::with('tenants')->where('owner_id', auth()->id())->find($id);
 
         if (!$property) {
             return response()->json(['error' => 'Property not found'], 404);
@@ -59,30 +63,36 @@ class PropertyController extends Controller
 
     public function update(Request $request, string $id)
     {
-        $property = Property::find($id);
+        // Validate the incoming request
+        $validated = $request->validate([
+            'name'        => 'sometimes|string|max:255',
+            'address'     => 'sometimes|string|max:500',
+            'rent_amount' => 'sometimes|numeric|min:0',
+        ]);
+
+        // Find the property owned by the authenticated user
+        $property = Property::where('id', $id)->where('owner_id', auth()->id())->first();
 
         if (!$property) {
-            return response()->json(['error' => 'Property not found'], 404);
+            return response()->json(['error' => 'Property not found or unauthorized'], 404);
         }
 
-        if ($property->owner_id !== auth()->id()) {
-            return response()->json(['error' => 'Unauthorized'], 403);
-        }
+        // Update the property with validated data
+        $property->fill($validated)->save();
 
-        $property->update($request->only(['name', 'address', 'rent_amount']));
-
-        return response()->json(['message' => 'Property updated successfully']);
+        return response()->json(['message' => 'Property updated successfully', 'property' => $property]);
     }
 
     public function destroy(string $id)
     {
-        $property = Property::find($id);
+        $property = Property::where('id', $id)->where('owner_id', auth()->id())->first();
 
         if (!$property) {
-            return response()->json(['error' => 'Property not found'], 404);
+            return response()->json(['error' => 'Property not found or unauthorized'], 404);
         }
 
         $property->delete();
+
         return response()->json(['message' => 'Property deleted successfully']);
     }
 
