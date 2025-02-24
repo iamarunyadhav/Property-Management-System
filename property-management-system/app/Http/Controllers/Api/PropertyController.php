@@ -13,10 +13,7 @@ class PropertyController extends Controller
     public function index(Request $request)
     {
 
-        //Todo pagination add
-        // return response(Property::with('tenants')->get(),200);
-
-        $property = Property::with('tenants')->where('owner_id', auth()->id())->get();
+        $property = Property::with('tenants')->where('owner_id', auth()->id());
 
           //filter the property with their name
             if ($request->has('name')) {
@@ -33,12 +30,15 @@ class PropertyController extends Controller
                 $property->where('rent_amount', '<=', $request->rent_max);
             }
 
-            return response()->json($property, 200);
+            //Paginate with 10 records
+            $properties = $property->paginate(10);
+
+            return response()->json($properties, 200);
     }
 
     public function store(Request $request)
     {
-        //Todo validation need to check address
+        //Todo validation need to check address if unique
         $validated = $request->validate([
             'name' => 'required|string',
             'address' => 'required|string',
@@ -77,7 +77,7 @@ class PropertyController extends Controller
             return response()->json(['error' => 'Property not found or unauthorized'], 404);
         }
 
-        // Update the property with validated data
+        // Update the property with validated data only
         $property->fill($validated)->save();
 
         return response()->json(['message' => 'Property updated successfully', 'property' => $property]);
@@ -99,17 +99,20 @@ class PropertyController extends Controller
 
    //rent distribution calculations
     public function rentDistribution($id) {
-        $property = Property::with('tenants')->find($id);
+        $property = Property::with('tenants')
+        ->where('owner_id', auth()->id())
+        ->where('id', $id)
+        ->first();
 
         if (!$property) {
-            return response()->json(['error' => 'Property not found'], 404);
+            return response()->json(['error' => 'Property not found or unauthorized'], 404);
         }
 
         $totalRent = $property->rent_amount;
         $tenants = $property->tenants;
         $property_name=$property->name;
 
-        if ($tenants->count() === 0) {
+        if ($tenants->isEmpty()) {
             return response()->json(['error' => 'No tenants available for rent distribution'], 400);
         }
 
@@ -142,7 +145,7 @@ class PropertyController extends Controller
     public function publicListing(Request $request)
     {
 
-        $property = Property::select(['id', 'name', 'address', 'rent_amount'])->get();
+        $property = Property::select(['id', 'name', 'address', 'rent_amount']);
 
             if ($request->has('name')) {
                 $property->where('name', 'LIKE', "%{$request->name}%");
@@ -156,6 +159,9 @@ class PropertyController extends Controller
                 $property->where('rent_amount', '<=', $request->rent_max);
             }
 
-            return response()->json($property, 200);
+            //Paginate with 10 records
+            $properties = $property->paginate(10);
+
+            return response()->json($properties, 200);
     }
 }

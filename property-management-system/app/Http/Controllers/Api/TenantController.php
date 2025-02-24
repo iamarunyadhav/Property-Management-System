@@ -11,12 +11,13 @@ class TenantController extends Controller
 
     public function index()
     {
-        // $tenantDetails=Tenant::with('property')->where('owner_id', auth()->id())->get();
-        $tenantDetails = Tenant::with('property')->whereHas('property', function ($query)
+        $tenantDetail = Tenant::with('property')->whereHas('property', function ($query)
          {
             $query->where('owner_id', auth()->id());
-         })->get();
+         });
 
+         //paginate for large data
+         $tenantDetails = $tenantDetail->paginate(10);
 
         return response()->json($tenantDetails, 200);
     }
@@ -37,7 +38,10 @@ class TenantController extends Controller
 
     public function show(string $id)
     {
-        $tenant = Tenant::with('property')->where('owner_id', auth()->id())->find($id);
+
+        $tenant = Tenant::whereHas('property', function ($query) {
+            $query->where('owner_id', auth()->id());
+        })->where('id', $id)->first();
 
         if (!$tenant) {
             return response()->json(['error' => 'Tenant not found or unauthorized'], 404);
@@ -86,25 +90,24 @@ class TenantController extends Controller
     public function getMonthlyRent(int $id)
     {
         // Fetch tenant by ID with selected fields only
-        $tenant = Tenant::with('property')->where('id', $id)->first();
+
+        $tenant = Tenant::whereHas('property', function ($query) {
+            $query->where('owner_id', auth()->id());
+        })->where('id', $id)->first();
+        // $tenant = Tenant::with('property')->where('id', $id)->first();
 
         if (!$tenant) {
-            return response()->json(['message' => 'Tenant not found'], 404);
+            return response()->json(['message' => 'Tenant not found or Unauthorized'], 404);
         }
 
         $property = $tenant->property;
-
-        if (!$property) {
-            return response()->json(['error' => 'Property not found for this tenant'], 404);
-        }
-
-        $totalRent = $property->rent_amount;
         $tenants = $property->tenants;
 
-        if ($tenants->count() === 0) {
+        if ($tenants->isEmpty()) {
             return response()->json(['error' => 'No tenants available for rent distribution'], 400);
         }
 
+        $totalRent = $property->rent_amount;
         $defaultShare = round($totalRent / $tenants->count(), 2);
 
         // Calculate the rent share for the specific tenant
