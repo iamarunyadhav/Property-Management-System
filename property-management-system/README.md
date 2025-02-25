@@ -140,6 +140,44 @@ I deployed to the server you can access via this endpoint
 
 ---
 
+🔧 Running Tests
+
+The project includes feature tests to validate API functionality and business logic. To execute the test cases, follow these steps:
+
+1️⃣ Configure a Separate Test Database
+
+Open the .env.testing file (or create one if not present) and update:
+
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=property_management_test  # Separate test database
+DB_USERNAME=root
+DB_PASSWORD=
+
+2️⃣ Run Database Migrations for Testing
+
+php artisan migrate --env=testing
+
+3️⃣ Execute the Test Suite
+
+Run all tests using PHPUnit:
+
+php artisan test
+
+4️⃣ Run a Specific Test Case
+
+For example, to test rent distribution:
+
+php artisan test --filter RentDistributionTest
+
+5️⃣ Rebuild the Test Database Before Running Tests
+
+php artisan migrate:refresh --env=testing
+
+
+
+
 ## **📄 Useful Artisan Commands**  
 
 | Command | Description |
