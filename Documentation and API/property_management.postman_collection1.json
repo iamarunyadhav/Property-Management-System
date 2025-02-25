@@ -1,0 +1,1586 @@
+{
+	"info": {
+		"_postman_id": "30b115fb-9c53-490b-b7a0-6abec2867399",
+		"name": "property_management",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24328222"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Owner",
+					"item": [
+						{
+							"name": "register",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\":\"vijaya\",\r\n    \"email\":\"imvijaya@gmail.com\",\r\n    \"password\":\"Vijaya@2020\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/register",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"register"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "register",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"name\":\"vijaya\",\r\n    \"email\":\"imvijaya@gmail.com\",\r\n    \"password\":\"Vijaya@2020\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{base_url}}/register",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"register"
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Host",
+											"value": "127.0.0.1:8000"
+										},
+										{
+											"key": "Connection",
+											"value": "close"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "PHP/8.2.12"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, private"
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 25 Feb 2025 08:54:46 GMT"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "X-RateLimit-Limit",
+											"value": "60"
+										},
+										{
+											"key": "X-RateLimit-Remaining",
+											"value": "59"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"success\": true,\n    \"message\": \"User registered successfully.\",\n    \"data\": {\n        \"id\": 3,\n        \"name\": \"vijaya\",\n        \"email\": \"imvijaya@gmail.com\"\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "login",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var response = pm.response.json();\r",
+											"if (response.token) {\r",
+											"    pm.globals.set(\"authToken\", response.token);\r",
+											"}\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "email",
+										"value": "arun@gmail.com",
+										"type": "text",
+										"disabled": true
+									},
+									{
+										"key": "password",
+										"value": "Arun@1234",
+										"type": "text",
+										"disabled": true
+									},
+									{
+										"key": "",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\":\"imvijaya@gmail.com\",\r\n    \"password\":\"Vijaya@2020\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/login",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"login"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "login",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "email",
+												"value": "arun@gmail.com",
+												"type": "text",
+												"disabled": true
+											},
+											{
+												"key": "password",
+												"value": "Arun@1234",
+												"type": "text",
+												"disabled": true
+											},
+											{
+												"key": "",
+												"value": "",
+												"type": "text",
+												"disabled": true
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"email\":\"imvijaya@gmail.com\",\r\n    \"password\":\"Vijaya@2020\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{base_url}}/login",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"login"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Host",
+											"value": "127.0.0.1:8000"
+										},
+										{
+											"key": "Connection",
+											"value": "close"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "PHP/8.2.12"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, private"
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 25 Feb 2025 08:55:15 GMT"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "X-RateLimit-Limit",
+											"value": "60"
+										},
+										{
+											"key": "X-RateLimit-Remaining",
+											"value": "57"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": true,\n    \"message\": \"User logged in successfully\",\n    \"token\": \"2|26z1SiwhxhrkOvxsDxdP9YC4DvzMTKt68fDDuukXc7b6c7fb\",\n    \"user_id\": 3\n}"
+								}
+							]
+						},
+						{
+							"name": "logout",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{authToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/logout",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"logout"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "logout",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"url": {
+											"raw": "{{base_url}}/logout",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"logout"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Host",
+											"value": "127.0.0.1:8000"
+										},
+										{
+											"key": "Connection",
+											"value": "close"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "PHP/8.2.12"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, private"
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 25 Feb 2025 08:55:03 GMT"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "X-RateLimit-Limit",
+											"value": "60"
+										},
+										{
+											"key": "X-RateLimit-Remaining",
+											"value": "59"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"Logged out successfully\"\n}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Properties",
+					"item": [
+						{
+							"name": "Create",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{authToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"name\": \"Maanu Luxury Apartments\",\r\n  \"address\":\"Germany\",\r\n  \"rent_amount\":50000\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/properties",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"properties"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Create",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"name\": \"Maanu Luxury Apartments\",\r\n  \"address\":\"Germany\",\r\n  \"rent_amount\":50000\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{base_url}}/properties",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"properties"
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Host",
+											"value": "127.0.0.1:8000"
+										},
+										{
+											"key": "Connection",
+											"value": "close"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "PHP/8.2.12"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, private"
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 25 Feb 2025 08:56:22 GMT"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "X-RateLimit-Limit",
+											"value": "60"
+										},
+										{
+											"key": "X-RateLimit-Remaining",
+											"value": "58"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"success\": true,\n    \"message\": \"Property created successfully.\",\n    \"data\": {\n        \"id\": 10,\n        \"name\": \"Maanu Luxury Apartments\",\n        \"address\": \"Germany\",\n        \"rent_amount\": 50000,\n        \"created_at\": \"2025-02-25 08:56:22\",\n        \"updated_at\": \"2025-02-25 08:56:22\"\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "GetAll",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{authToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/properties",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"properties"
+									],
+									"query": [
+										{
+											"key": "rent_min",
+											"value": "12000",
+											"disabled": true
+										},
+										{
+											"key": "rent_max",
+											"value": "11000",
+											"disabled": true
+										},
+										{
+											"key": "name",
+											"value": "Meenu",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "GetAll",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{base_url}}/properties",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"properties"
+											],
+											"query": [
+												{
+													"key": "rent_min",
+													"value": "12000",
+													"disabled": true
+												},
+												{
+													"key": "rent_max",
+													"value": "11000",
+													"disabled": true
+												},
+												{
+													"key": "name",
+													"value": "Meenu",
+													"disabled": true
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Host",
+											"value": "127.0.0.1:8000"
+										},
+										{
+											"key": "Connection",
+											"value": "close"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "PHP/8.2.12"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, private"
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 25 Feb 2025 09:10:53 GMT"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "X-RateLimit-Limit",
+											"value": "60"
+										},
+										{
+											"key": "X-RateLimit-Remaining",
+											"value": "58"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"success\": true,\n    \"message\": \"Properties retrieved successfully.\",\n    \"data\": [\n        {\n            \"id\": 7,\n            \"name\": \"menaka Luxury Apartments\",\n            \"address\": \"Dubai\",\n            \"rent_amount\": \"15000.00\",\n            \"tenants\": [\n                {\n                    \"id\": 31,\n                    \"name\": \"samitha\",\n                    \"email\": \"samitha@gmail.com\",\n                    \"phone_number\": \"0661408018\",\n                    \"agreement_percentage\": \"20.00\",\n                    \"created_at\": \"2025-02-25 08:59:38\",\n                    \"updated_at\": \"2025-02-25 08:59:38\"\n                },\n                {\n                    \"id\": 32,\n                    \"name\": \"kalyan\",\n                    \"email\": \"kalyan@gmail.com\",\n                    \"phone_number\": \"0661408098\",\n                    \"agreement_percentage\": \"40.00\",\n                    \"created_at\": \"2025-02-25 09:00:20\",\n                    \"updated_at\": \"2025-02-25 09:00:20\"\n                }\n            ],\n            \"created_at\": \"2025-02-25 08:55:40\",\n            \"updated_at\": \"2025-02-25 08:55:40\"\n        },\n        {\n            \"id\": 8,\n            \"name\": \"Alwar Luxury Apartments\",\n            \"address\": \"Dubai\",\n            \"rent_amount\": \"20000.00\",\n            \"tenants\": [\n                {\n                    \"id\": 33,\n                    \"name\": \"mathan\",\n                    \"email\": \"mathan@gmail.com\",\n                    \"phone_number\": \"0661408099\",\n                    \"agreement_percentage\": null,\n                    \"created_at\": \"2025-02-25 09:00:51\",\n                    \"updated_at\": \"2025-02-25 09:00:51\"\n                },\n                {\n                    \"id\": 34,\n                    \"name\": \"yadhavan\",\n                    \"email\": \"yadhavan@gmail.com\",\n                    \"phone_number\": \"0661408099\",\n                    \"agreement_percentage\": null,\n                    \"created_at\": \"2025-02-25 09:01:33\",\n                    \"updated_at\": \"2025-02-25 09:01:33\"\n                },\n                {\n                    \"id\": 35,\n                    \"name\": \"ambi\",\n                    \"email\": \"ambi@gmail.com\",\n                    \"phone_number\": \"0661408009\",\n                    \"agreement_percentage\": null,\n                    \"created_at\": \"2025-02-25 09:03:22\",\n                    \"updated_at\": \"2025-02-25 09:03:22\"\n                }\n            ],\n            \"created_at\": \"2025-02-25 08:55:53\",\n            \"updated_at\": \"2025-02-25 08:55:53\"\n        },\n        {\n            \"id\": 9,\n            \"name\": \"Dushi Luxury Apartments\",\n            \"address\": \"colombo\",\n            \"rent_amount\": \"20000.00\",\n            \"tenants\": [],\n            \"created_at\": \"2025-02-25 08:56:06\",\n            \"updated_at\": \"2025-02-25 08:56:06\"\n        },\n        {\n            \"id\": 10,\n            \"name\": \"Maanu Luxury Apartments\",\n            \"address\": \"Germany\",\n            \"rent_amount\": \"50000.00\",\n            \"tenants\": [],\n            \"created_at\": \"2025-02-25 08:56:22\",\n            \"updated_at\": \"2025-02-25 08:56:22\"\n        }\n    ]\n}"
+								}
+							]
+						},
+						{
+							"name": "GetById",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{authToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/properties/:id",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"properties",
+										":id"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "1",
+											"disabled": true
+										}
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "6"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "GetById",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{base_url}}/properties/:id",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"properties",
+												":id"
+											],
+											"query": [
+												{
+													"key": "id",
+													"value": "1",
+													"disabled": true
+												}
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "6"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Host",
+											"value": "127.0.0.1:8000"
+										},
+										{
+											"key": "Connection",
+											"value": "close"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "PHP/8.2.12"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, private"
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 25 Feb 2025 08:56:49 GMT"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "X-RateLimit-Limit",
+											"value": "60"
+										},
+										{
+											"key": "X-RateLimit-Remaining",
+											"value": "56"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"success\": true,\n    \"message\": \"Property retrieved successfully.\",\n    \"data\": {\n        \"id\": 6,\n        \"name\": \"arun Luxury Apartments\",\n        \"address\": \"Dubai\",\n        \"rent_amount\": \"15000.00\",\n        \"tenants\": [],\n        \"created_at\": \"2025-02-25 08:55:32\",\n        \"updated_at\": \"2025-02-25 08:55:32\"\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "Update",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{authToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "id",
+										"value": "1",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{  \r\n  \"name\": \"meenu unique Luxury Apartments new\",\r\n  \"address\":\"Dubai\",\r\n  \"rent_amount\": 12000\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/properties/:id",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"properties",
+										":id"
+									],
+									"query": [
+										{
+											"key": "",
+											"value": null,
+											"disabled": true
+										}
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "6"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Update",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "id",
+												"value": "1",
+												"type": "text",
+												"disabled": true
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{  \r\n  \"name\": \"meenu unique Luxury Apartments new\",\r\n  \"address\":\"Dubai\",\r\n  \"rent_amount\": 12000\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{base_url}}/properties/:id",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"properties",
+												":id"
+											],
+											"query": [
+												{
+													"key": "",
+													"value": null,
+													"disabled": true
+												}
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "6"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Host",
+											"value": "127.0.0.1:8000"
+										},
+										{
+											"key": "Connection",
+											"value": "close"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "PHP/8.2.12"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, private"
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 25 Feb 2025 08:58:18 GMT"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "X-RateLimit-Limit",
+											"value": "60"
+										},
+										{
+											"key": "X-RateLimit-Remaining",
+											"value": "59"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"success\": true,\n    \"message\": \"Property updated successfully.\",\n    \"data\": {\n        \"id\": 6,\n        \"name\": \"meenu unique Luxury Apartments new\",\n        \"address\": \"Dubai\",\n        \"rent_amount\": 12000,\n        \"tenants\": [],\n        \"created_at\": \"2025-02-25 08:55:32\",\n        \"updated_at\": \"2025-02-25 08:58:18\"\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "Delete",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{authToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://127.0.0.1:8000/api/properties/:id",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"properties",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "4"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "DeleteProperty",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{base_url}}/properties/:id",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"properties",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "6"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Host",
+											"value": "127.0.0.1:8000"
+										},
+										{
+											"key": "Connection",
+											"value": "close"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "PHP/8.2.12"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, private"
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 25 Feb 2025 08:58:55 GMT"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "X-RateLimit-Limit",
+											"value": "60"
+										},
+										{
+											"key": "X-RateLimit-Remaining",
+											"value": "56"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"success\": true,\n    \"message\": \"Property deleted successfully.\",\n    \"data\": null\n}"
+								}
+							]
+						},
+						{
+							"name": "Search",
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Tenants",
+					"item": [
+						{
+							"name": "Create",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{authToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": " \r\n {\r\n \"name\":\"ambiman\",\r\n \"email\":\"ambi@gmail.com\",\r\n \"phone_number\":\"0661408009\",\r\n \"property_id\":8,        \r\n \"agreement_percentage\":\"\"\r\n }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/tenants",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"tenants"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Create",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": " \r\n {\r\n \"name\":\"ambiman\",\r\n \"email\":\"ambi@gmail.com\",\r\n \"phone_number\":\"0661408009\",\r\n \"property_id\":8,        \r\n \"agreement_percentage\":\"\"\r\n }",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{base_url}}/tenants",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"tenants"
+											]
+										}
+									},
+									"status": "Unprocessable Content",
+									"code": 422,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Host",
+											"value": "127.0.0.1:8000"
+										},
+										{
+											"key": "Connection",
+											"value": "close"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "PHP/8.2.12"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, private"
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 25 Feb 2025 09:03:32 GMT"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "X-RateLimit-Limit",
+											"value": "60"
+										},
+										{
+											"key": "X-RateLimit-Remaining",
+											"value": "57"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"success\": false,\n    \"message\": {\n        \"email\": [\n            \"The email has already been taken.\"\n        ],\n        \"phone_number\": [\n            \"The phone number has already been taken.\"\n        ]\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "GetAll",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{authToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/tenants",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"tenants"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "GetAll",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{base_url}}/tenants",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"tenants"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Host",
+											"value": "127.0.0.1:8000"
+										},
+										{
+											"key": "Connection",
+											"value": "close"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "PHP/8.2.12"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, private"
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 25 Feb 2025 09:15:26 GMT"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "X-RateLimit-Limit",
+											"value": "60"
+										},
+										{
+											"key": "X-RateLimit-Remaining",
+											"value": "58"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"success\": true,\n    \"message\": \"Tenants retrieved successfully.\",\n    \"data\": [\n        {\n            \"id\": 31,\n            \"name\": \"samitha\",\n            \"email\": \"samitha@gmail.com\",\n            \"phone_number\": \"0661408018\",\n            \"property_details\": {\n                \"id\": 7,\n                \"name\": \"menaka Luxury Apartments\",\n                \"address\": \"Dubai\",\n                \"rent_amount\": \"15000.00\",\n                \"created_at\": \"2025-02-25 08:55:40\",\n                \"updated_at\": \"2025-02-25 08:55:40\"\n            },\n            \"agreement_percentage\": \"20.00\",\n            \"created_at\": \"2025-02-25 08:59:38\",\n            \"updated_at\": \"2025-02-25 08:59:38\"\n        },\n        {\n            \"id\": 32,\n            \"name\": \"kalyan\",\n            \"email\": \"kalyan@gmail.com\",\n            \"phone_number\": \"0661408098\",\n            \"property_details\": {\n                \"id\": 7,\n                \"name\": \"menaka Luxury Apartments\",\n                \"address\": \"Dubai\",\n                \"rent_amount\": \"15000.00\",\n                \"created_at\": \"2025-02-25 08:55:40\",\n                \"updated_at\": \"2025-02-25 08:55:40\"\n            },\n            \"agreement_percentage\": \"40.00\",\n            \"created_at\": \"2025-02-25 09:00:20\",\n            \"updated_at\": \"2025-02-25 09:00:20\"\n        },\n        {\n            \"id\": 33,\n            \"name\": \"mathan\",\n            \"email\": \"mathan@gmail.com\",\n            \"phone_number\": \"0661408099\",\n            \"property_details\": {\n                \"id\": 8,\n                \"name\": \"Alwar Luxury Apartments\",\n                \"address\": \"Dubai\",\n                \"rent_amount\": \"20000.00\",\n                \"created_at\": \"2025-02-25 08:55:53\",\n                \"updated_at\": \"2025-02-25 08:55:53\"\n            },\n            \"agreement_percentage\": null,\n            \"created_at\": \"2025-02-25 09:00:51\",\n            \"updated_at\": \"2025-02-25 09:00:51\"\n        },\n        {\n            \"id\": 34,\n            \"name\": \"yadhavan\",\n            \"email\": \"yadhavan@gmail.com\",\n            \"phone_number\": \"0661408099\",\n            \"property_details\": {\n                \"id\": 8,\n                \"name\": \"Alwar Luxury Apartments\",\n                \"address\": \"Dubai\",\n                \"rent_amount\": \"20000.00\",\n                \"created_at\": \"2025-02-25 08:55:53\",\n                \"updated_at\": \"2025-02-25 08:55:53\"\n            },\n            \"agreement_percentage\": null,\n            \"created_at\": \"2025-02-25 09:01:33\",\n            \"updated_at\": \"2025-02-25 09:01:33\"\n        },\n        {\n            \"id\": 35,\n            \"name\": \"ambi\",\n            \"email\": \"ambi@gmail.com\",\n            \"phone_number\": \"0661408009\",\n            \"property_details\": {\n                \"id\": 8,\n                \"name\": \"Alwar Luxury Apartments\",\n                \"address\": \"Dubai\",\n                \"rent_amount\": \"20000.00\",\n                \"created_at\": \"2025-02-25 08:55:53\",\n                \"updated_at\": \"2025-02-25 08:55:53\"\n            },\n            \"agreement_percentage\": null,\n            \"created_at\": \"2025-02-25 09:03:22\",\n            \"updated_at\": \"2025-02-25 09:03:22\"\n        }\n    ]\n}"
+								}
+							]
+						},
+						{
+							"name": "GetById",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{authToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/tenants/:id",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"tenants",
+										":id"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "36",
+											"disabled": true
+										}
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "31"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "GetById",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{base_url}}/tenants/:id",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"tenants",
+												":id"
+											],
+											"query": [
+												{
+													"key": "id",
+													"value": "36",
+													"disabled": true
+												}
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "31"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Host",
+											"value": "127.0.0.1:8000"
+										},
+										{
+											"key": "Connection",
+											"value": "close"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "PHP/8.2.12"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, private"
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 25 Feb 2025 09:15:45 GMT"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "X-RateLimit-Limit",
+											"value": "60"
+										},
+										{
+											"key": "X-RateLimit-Remaining",
+											"value": "57"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"success\": true,\n    \"message\": \"Tenant retrieved successfully.\",\n    \"data\": {\n        \"id\": 31,\n        \"name\": \"samitha\",\n        \"email\": \"samitha@gmail.com\",\n        \"phone_number\": \"0661408018\",\n        \"agreement_percentage\": \"20.00\",\n        \"created_at\": \"2025-02-25 08:59:38\",\n        \"updated_at\": \"2025-02-25 08:59:38\"\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "Delete",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{authToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/tenants/:id",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"tenants",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Delete",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{base_url}}/tenants/:id",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"tenants",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "1"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Host",
+											"value": "127.0.0.1:8000"
+										},
+										{
+											"key": "Connection",
+											"value": "close"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "PHP/8.2.12"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, private"
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 25 Feb 2025 06:11:40 GMT"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "X-RateLimit-Limit",
+											"value": "60"
+										},
+										{
+											"key": "X-RateLimit-Remaining",
+											"value": "58"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"success\": true,\n    \"message\": \"Tenant deleted successfully.\",\n    \"data\": null\n}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "RentDistribution",
+					"item": [
+						{
+							"name": "Calculate",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{authToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/properties/:property_id/rent-distribution",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"properties",
+										":property_id",
+										"rent-distribution"
+									],
+									"variable": [
+										{
+											"key": "property_id",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Calculate",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{base_url}}/properties/:property_id/rent-distribution",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"properties",
+												":property_id",
+												"rent-distribution"
+											],
+											"variable": [
+												{
+													"key": "property_id",
+													"value": "8"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Host",
+											"value": "127.0.0.1:8000"
+										},
+										{
+											"key": "Connection",
+											"value": "close"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "PHP/8.2.12"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, private"
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 25 Feb 2025 09:16:05 GMT"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "X-RateLimit-Limit",
+											"value": "60"
+										},
+										{
+											"key": "X-RateLimit-Remaining",
+											"value": "55"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"success\": true,\n    \"message\": \"Rent distribution calculated.\",\n    \"data\": {\n        \"total_rent\": \"20000.00\",\n        \"property_name\": \"Alwar Luxury Apartments\",\n        \"tenants\": [\n            {\n                \"id\": 33,\n                \"name\": \"mathan\",\n                \"rent_share\": 6666.67,\n                \"late_fee\": 0\n            },\n            {\n                \"id\": 34,\n                \"name\": \"yadhavan\",\n                \"rent_share\": 6666.67,\n                \"late_fee\": 0\n            },\n            {\n                \"id\": 35,\n                \"name\": \"ambi\",\n                \"rent_share\": 6666.67,\n                \"late_fee\": 0\n            }\n        ]\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "GetRentById",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{authToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/tenants/:id/rent",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"tenants",
+										":id",
+										"rent"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "32"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "GetRentById",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{base_url}}/tenants/:id/rent",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"tenants",
+												":id",
+												"rent"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "32"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Host",
+											"value": "127.0.0.1:8000"
+										},
+										{
+											"key": "Connection",
+											"value": "close"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "PHP/8.2.12"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, private"
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 25 Feb 2025 09:16:16 GMT"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "X-RateLimit-Limit",
+											"value": "60"
+										},
+										{
+											"key": "X-RateLimit-Remaining",
+											"value": "54"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"success\": true,\n    \"message\": \"Tenant monthly rent retrieved successfully.\",\n    \"data\": [\n        {\n            \"id\": 32,\n            \"name\": \"kalyan\",\n            \"rent_share\": 6000,\n            \"late_fee\": 0\n        }\n    ]\n}"
+								}
+							]
+						}
+					]
+				}
+			]
+		}
+	]
+}
