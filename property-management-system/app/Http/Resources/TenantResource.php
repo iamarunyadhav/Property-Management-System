@@ -12,7 +12,7 @@
              'name'               => $this->name,
              'email'              => $this->email,
              'phone_number'       => $this->phone_number,
-             'property'           => new PropertyResource($this->whenLoaded('property')),
+             'property_details'   => new PropertyResource($this->whenLoaded('property')),
              'agreement_percentage' => $this->agreement_percentage,
              'created_at'         => $this->created_at->toDateTimeString(),
              'updated_at'         => $this->updated_at->toDateTimeString(),

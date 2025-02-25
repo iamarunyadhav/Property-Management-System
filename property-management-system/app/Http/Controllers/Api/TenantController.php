@@ -43,7 +43,7 @@ class TenantController extends Controller
             $validated = $request->validate([
                 'name' => 'required|string',
                 'email' => 'required|email|unique:tenants',
-                'phone_number'=> 'required|string',
+                'phone_number' => 'required|string|unique:tenants,phone_number',
                 'property_id'=> 'required|exists:properties,id',
                 'agreement_percentage'=> 'nullable|numeric|min:0|max:100',
             ]);

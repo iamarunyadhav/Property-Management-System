@@ -8,6 +8,7 @@ class TenantRepository
 {
     public function getAllTenants($userId)
     {
+
         return Tenant::with('property')
             ->whereHas('property', function($query) use ($userId) {
                 // Filter tenants by property owner
