@@ -106,6 +106,7 @@ class TenantController extends Controller
         if (empty($tenantIds)) {
             return ApiResponse::error('Invalid tenant IDs provided.', 400);
         }
+
         $data = $this->tenantService->getMonthlyRent($tenantIds);
 
         if (!$data) {

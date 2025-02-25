@@ -28,8 +28,8 @@ class TenantRepository
     public function findRentById($ids, $userId)
     {
         return Tenant::whereHas('property', fn($query) => $query->where('owner_id', $userId))
-                 ->whereIn('id', (array) $ids) // Ensures single values are converted to an array
-                 ->get();
+        ->whereIn('id', $ids)
+        ->get();
     }
 
     public function create(array $data)

@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Helpers\ApiResponse;
 use App\Repositories\TenantRepository;
 use App\Repositories\PropertyRepository;
 use Illuminate\Support\Facades\Auth;
@@ -58,8 +59,9 @@ class TenantService
     {
 
         $tenants = $this->tenantRepository->findRentById($ids, Auth::id());
-        if (!$tenants) {
-            return null;
+
+        if ($tenants->isEmpty() || !$tenants) {
+            return ApiResponse::error('Unauthorized: No valid tenants found.', 403);
         }
          foreach($tenants as $tenant)
          {
