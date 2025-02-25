@@ -140,7 +140,7 @@ I deployed to the server you can access via this endpoint
 
 ---
 
-🔧 Running Tests
+## **🔧 Running Tests** 
 
 The project includes feature tests to validate API functionality and business logic. To execute the test cases, follow these steps:
 
@@ -148,34 +148,38 @@ The project includes feature tests to validate API functionality and business lo
 
 Open the .env.testing file (or create one if not present) and update:
 
+```env
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
 DB_DATABASE=property_management_test  # Separate test database
 DB_USERNAME=root
 DB_PASSWORD=
+```
 
 2️⃣ Run Database Migrations for Testing
-
+```sh
 php artisan migrate --env=testing
-
+```
+? if you need db seeds 
+```sh
+php artisan db:seed --env=testing
+```
 3️⃣ Execute the Test Suite
-
 Run all tests using PHPUnit:
-
+```sh
 php artisan test
-
+```
 4️⃣ Run a Specific Test Case
 
 For example, to test rent distribution:
-
+```sh
 php artisan test --filter RentDistributionTest
-
+```
 5️⃣ Rebuild the Test Database Before Running Tests
-
+```sh
 php artisan migrate:refresh --env=testing
-
-
+```
 
 
 ## **📄 Useful Artisan Commands**  

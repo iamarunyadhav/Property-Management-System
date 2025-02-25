@@ -5,10 +5,12 @@ namespace Tests\Unit;
 use App\Models\Property;
 use App\Models\Tenant;
 use App\Services\RentService;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use PHPUnit\Framework\TestCase;
 
 class RentTest extends TestCase
 {
+    use RefreshDatabase;
     /**
      * A basic unit test example.
      */

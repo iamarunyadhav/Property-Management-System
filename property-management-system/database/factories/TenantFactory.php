@@ -25,7 +25,7 @@ class TenantFactory extends Factory
             'email'=>$this->faker->unique()->safeEmail,
             'phone_number'=>$this->faker->phoneNumber,
             'property_id' => Property::inRandomOrder()->first()->id,
-            'agreement_percentage' => $this->faker->randomElement([25, 40, 50, null]),
+            'agreement_percentage' => $this->faker->optional()->randomFloat(2, 0, 100),
         ];
     }
 }

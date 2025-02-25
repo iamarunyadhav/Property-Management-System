@@ -6,7 +6,7 @@ class RentService
 
     public static function calculateRentDistribution($property)
     {
-        $totalRent = $property->rent_amount;
+        $totalRent = $property->rent_amount* 1;
         $tenants = $property->tenants;
 
         if ($tenants->isEmpty()) {
@@ -47,7 +47,7 @@ class RentService
         // Case 2: If agreement percentages exist for all tenants
         if (!empty($tenantsWithAgreement)) {
             foreach ($tenantsWithAgreement as $tenant) {
-                $share = ($tenant->agreement_percentage / 100) * $totalRent;
+                $share = round(($tenant->agreement_percentage / 100) * $totalRent, 2) * 1;
 
                 $rentDetails[] = [
                     'id' => $tenant->id,
@@ -59,7 +59,7 @@ class RentService
         }
         // Case 3: If no agreements, split rent equally
         else {
-            $equalShare = round($totalRent / count($tenants), 2);
+            $equalShare = round($totalRent / count($tenants), 2) * 1;
             foreach ($tenants as $tenant) {
                 $rentDetails[] = [
                     'id' => $tenant->id,

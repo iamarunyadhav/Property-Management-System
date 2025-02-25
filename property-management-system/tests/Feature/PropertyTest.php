@@ -91,7 +91,7 @@ class PropertyTest extends TestCase
             'email'=>'imarun@gmail.com',
             'phone_number'=>'0661408018',
             'property_id'=>$property->id,
-            'agreement_percentage'=>''
+            'agreement_percentage'=>null
         ]);
 
         $property->refresh();
@@ -213,14 +213,14 @@ class PropertyTest extends TestCase
             'email'=>'imarun@gmail.com',
             'phone_number'=>'0661408018',
             'property_id'=>$property->id,
-            'agreement_percentage'=>''
+            'agreement_percentage'=>null
         ]);
         $tenant2=Tenant::factory()->create([
             'name'=>'john',
             'email'=>'john@gmail.com',
             'phone_number'=>'0661408019',
             'property_id'=>$property->id,
-            'agreement_percentage'=>''
+            'agreement_percentage'=>null
         ]);
 
         $property->refresh();
