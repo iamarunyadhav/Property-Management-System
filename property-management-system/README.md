@@ -1,66 +1,104 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+# BACKEND PROJRCT API
+# Property Management System API
 
-## About Laravel
+Introduction
+This is a Laravel-based API for managing property rentals, tenant records, and rent distribution. The API provides authentication, CRUD operations, and automated rent calculations for property owners.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## System Requirements
+## Technologies Used
+- **PHP**: 8.1 or higher
+- **Composer**: Latest version
+- **Laravel**: 10^
+- **Database**: MySQL
+- **XAMPP/WAMP**: For running Apache and MySQL locally
+- **Postman**: For API testing
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Getting Started
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+These instructions will guide you through setting up and running the project on your local machine for development and testing purposes.
 
-## Learning Laravel
+### Prerequisites
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Before you begin, ensure you have the following installed:
+- Git
+- PHP (>= 8.1)
+- Composer
+- MySQL or another relational database system
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### Cloning the Repository
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Start by cloning this repository to your local machine:
 
-## Laravel Sponsors
+```bash
+## Backend
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+### Inside the project directory, run the following commands
+git clone https://github.com/iamarunyadhav/Property-Management-System.git
 
-### Premium Partners
+cd property-management-system
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+##use any sql server like xampp or wampp
+xampp (phpMyAdmin, MySQL Workbench)
 
-## Contributing
+cp .env.example .env
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Open .env and update the database credentials:
+### setup the database
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=property_management  #whatever you want to name your databas
+DB_USERNAME=root #username
+DB_PASSWORD=    #password
 
-## Code of Conduct
+Start MySQL Server
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### install package dependencies
+composer install
 
-## Security Vulnerabilities
+### Generate key 
+php artisan key:generate
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### migarate the database
+php artisan migrate
 
-## License
+### Seed Sample Data
+php artisan db:seed
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## Start backend server
+php artisan serve
+
+
+### This will typically serve your backend on 
+
+Note : http://127.0.0.1:8000   #(run this port as default)
+
+
+## Running the API
+### Import API Collection into Postman
+
+### Inside the project, find the api_collection.json file. (inside documentation)
+
+##  Testing Endpoints
+Ensure the Laravel server is running.
+Use Postman to send requests and check responses.
+
+Example request to fetch tenant rent details:
+GET /api/tenants/42/rent
+
+### Check Request Parameters & Payloads
+### Verify all required parameters before executing API requests.
+### Use different tenant IDs to fetch respective rent distributions.
+
+Happy start ____
+
+
+## useful commands
+php artisan migrate:refresh
+php artisan optimize:clear
+php artisan cache:clear
+
+```
+
+### API DOCUMENTATION : https://documenter.getpostman.com/view/24328222/2sAYdeLrnP
