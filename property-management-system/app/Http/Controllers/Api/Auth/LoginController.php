@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\Auth;
 
+use App\Helpers\ApiResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
@@ -49,6 +50,11 @@ class LoginController extends Controller
                 'token' => $user->createToken("API TOKEN")->plainTextToken,
                 'user_id' => $user->id
             ], 200);
+
+            // return ApiResponse::success('User logged successfully.', [
+            //     'token' => $user->createToken("API TOKEN")->plainTextToken,
+            //     'user_id' => $user->id,
+            // ], 200);
 
         } catch (\Throwable $th) {
             return response()->json([

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\Auth;
 
+use App\Helpers\ApiResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
@@ -47,10 +48,19 @@ class RegisterController extends Controller
                 'password' => Hash::make($request->password)
             ]);
 
-            return response()->json([
-                'status' => true,
-                'message' => 'User created successfully'
-                //based on the requirement , you can return the user data or a token
+            // return response()->json([
+            //     'status' => true,
+            //     'message' => 'User created successfully'
+            //     //based on the requirement , you can return the user data or a token
+            //     // 'token' => $user->createToken("API TOKEN")->plainTextToken
+            // ], 201);
+
+
+            //based on the requirement , you can return the user data or a token
+            return ApiResponse::success('User registered successfully.', [
+                'id' => $user->id,
+                'name' => $user->name,
+                'email' => $user->email,
                 // 'token' => $user->createToken("API TOKEN")->plainTextToken
             ], 201);
 

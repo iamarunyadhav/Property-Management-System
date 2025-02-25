@@ -21,7 +21,7 @@ class PropertyFactory extends Factory
     public function definition(): array
     {
         return [
-          'name'=>$this->faker->company.' Property',
+          'name'=>$this->faker->word.' Property',
           'address'=>$this->faker->address,
           'rent_amount' => round($this->faker->numberBetween(500, 1000), -2),
           'owner_id'=> User::inRandomOrder()->first()->id,
