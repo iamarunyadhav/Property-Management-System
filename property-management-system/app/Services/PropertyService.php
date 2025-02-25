@@ -54,13 +54,7 @@ class PropertyService
     public function rentDistribution($id)
     {
         $property = $this->propertyRepository->findById($id, Auth::id());
-        // dd($property);
         return RentService::calculateRentDistribution($property, $tenantCollection = null);
-    }
-
-    public function getPublicProperties($filters)
-    {
-        return $this->propertyRepository->getPublicProperties($filters);
     }
 }
 

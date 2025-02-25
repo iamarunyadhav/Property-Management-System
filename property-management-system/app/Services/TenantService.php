@@ -68,20 +68,15 @@ class TenantService
          $data=RentService::calculateRentDistribution($property, $ids);
 
         $tenants = $data['tenants'];
-        // dd($tenants);
         $filteredData = [];
 
         foreach ($tenants as $item) {
             if (in_array($item['id'], $ids)) {
-                if($item['id']!=="uncovered")
-                {
-                $filteredData[] = $item; // Add the matching item to the new array
-                }
+                 $filteredData[] = $item; // Add the matching item to the new array
             }
         }
         // Reset array keys
         $filteredData = array_values($filteredData);
-        // dd($filteredData);
         return $filteredData;
     }
 }

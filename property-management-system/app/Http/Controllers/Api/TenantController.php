@@ -7,7 +7,6 @@ use App\Http\Resources\TenantResource;
 use App\Services\TenantService;
 use App\Helpers\ApiResponse;
 use App\Models\Property;
-use Dotenv\Exception\ValidationException;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException as ValidationValidationException;
 
@@ -34,7 +33,7 @@ class TenantController extends Controller
             return ApiResponse::error('Tenant not found.', 404);
         }
 
-        return ApiResponse::success('Tenant retrieved successfully.', new TenantResource($tenant));
+       return ApiResponse::success('Tenant retrieved successfully.', new TenantResource($tenant));
     }
 
     public function store(Request $request)
@@ -63,6 +62,7 @@ class TenantController extends Controller
         return ApiResponse::success('Tenant created successfully.', new TenantResource($tenant), 201);
     }
 
+
     public function update(Request $request, $id)
     {
         $data = $request->validate([
@@ -82,6 +82,7 @@ class TenantController extends Controller
         return ApiResponse::success('Tenant updated successfully.', new TenantResource($tenant));
     }
 
+
     public function destroy($id)
     {
         $deleted = $this->tenantService->deleteTenant($id);
@@ -93,9 +94,10 @@ class TenantController extends Controller
         return ApiResponse::success('Tenant deleted successfully.');
     }
 
+
     public function getMonthlyRent($id)
     {
-
+        //here the multiple , separated string id's into array
         $tenantIds = strpos($id, ',') !== false ? explode(',', $id) : [$id];
 
         // Convert string values to integers and remove invalid values

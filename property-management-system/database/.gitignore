@@ -1,1 +1,31 @@
 *.sqlite*
+
+# Laravel specific
+/vendor
+/node_modules
+/public/storage
+/storage/*.key
+/storage/*.log
+/storage/oauth-private.key
+/storage/oauth-public.key
+/storage/framework/*
+/storage/logs/*
+/storage/app/public
+/bootstrap/cache
+
+# Environment & Security
+.env
+.env.*
+/config/*.key
+
+# IDE / Editor / System
+.idea
+.vscode
+.DS_Store
+Thumbs.db
+
+# Composer & NPM related
+composer.lock
+package-lock.json
+yarn.lock
+npm-debug.log

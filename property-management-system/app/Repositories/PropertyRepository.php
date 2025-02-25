@@ -44,24 +44,6 @@ class PropertyRepository
         return $property->delete();
     }
 
-    public function getPublicProperties($filters)
-    {
-        $query = Property::select(['id', 'name', 'address', 'rent_amount']);
-
-        if (isset($filters['name'])) {
-            $query->where('name', 'LIKE', "%{$filters['name']}%");
-        }
-
-        if (isset($filters['rent_min'])) {
-            $query->where('rent_amount', '>=', $filters['rent_min']);
-        }
-
-        if (isset($filters['rent_max'])) {
-            $query->where('rent_amount', '<=', $filters['rent_max']);
-        }
-
-        return $query->paginate(10);
-    }
 }
 
 

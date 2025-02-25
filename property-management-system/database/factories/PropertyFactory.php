@@ -23,6 +23,7 @@ class PropertyFactory extends Factory
         return [
           'name'=>$this->faker->word.' Property',
           'address'=>$this->faker->address,
+          //in dollars with this range (assumption) 100 round figures
           'rent_amount' => round($this->faker->numberBetween(500, 1000), -2),
           'owner_id'=> User::inRandomOrder()->first()->id,
         ];

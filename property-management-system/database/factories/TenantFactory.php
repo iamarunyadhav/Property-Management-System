@@ -21,7 +21,6 @@ class TenantFactory extends Factory
     public function definition(): array
     {
         return [
-            // ['name','email','phone_number','property_id','agreement_percentage']
             'name'=>$this->faker->name,
             'email'=>$this->faker->unique()->safeEmail,
             'phone_number'=>$this->faker->phoneNumber,

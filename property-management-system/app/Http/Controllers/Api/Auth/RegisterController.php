@@ -19,7 +19,7 @@ class RegisterController extends Controller
     public function register(Request $request): JsonResponse
     {
         try {
-            // Validate request data
+            // Validate request data (min 8 with 1 letter, 1 number, 1 special char)
             $validator = Validator::make($request->all(), [
                 'name' => 'required|string|max:255',
                 'email' => 'required|email|unique:users,email|max:255',
@@ -48,15 +48,7 @@ class RegisterController extends Controller
                 'password' => Hash::make($request->password)
             ]);
 
-            // return response()->json([
-            //     'status' => true,
-            //     'message' => 'User created successfully'
-            //     //based on the requirement , you can return the user data or a token
-            //     // 'token' => $user->createToken("API TOKEN")->plainTextToken
-            // ], 201);
-
-
-            //based on the requirement , you can return the user data or a token
+            //based on the requirement , you can return the user data or a token for security
             return ApiResponse::success('User registered successfully.', [
                 'id' => $user->id,
                 'name' => $user->name,

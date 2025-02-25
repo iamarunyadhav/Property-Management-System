@@ -7,7 +7,6 @@ use App\Http\Resources\PropertyResource;
 use App\Services\PropertyService;
 use App\Helpers\ApiResponse;
 use App\Http\Resources\PublicListResource;
-use App\Http\Resources\PublicResource;
 use Illuminate\Http\Request;
 
 class PropertyController extends Controller
@@ -86,12 +85,6 @@ class PropertyController extends Controller
         }
 
         return ApiResponse::success('Rent distribution calculated.', $data);
-    }
-
-    public function publicListing(Request $request)
-    {
-        $properties = $this->propertyService->getPublicProperties($request->all());
-        return ApiResponse::success('Public properties retrieved successfully.', PublicListResource::collection($properties));
     }
 }
 

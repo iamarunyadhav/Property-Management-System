@@ -51,11 +51,6 @@ class LoginController extends Controller
                 'user_id' => $user->id
             ], 200);
 
-            // return ApiResponse::success('User logged successfully.', [
-            //     'token' => $user->createToken("API TOKEN")->plainTextToken,
-            //     'user_id' => $user->id,
-            // ], 200);
-
         } catch (\Throwable $th) {
             return response()->json([
                 'status' => false,
