@@ -1,0 +1,29 @@
+<div class="p-4">
+  <h2 class="text-xl font-semibold mb-4">Properties</h2>
+
+  <button routerLink="/properties/add" class="bg-green-600 text-white px-3 py-2 rounded mb-4">
+    + Add Property
+  </button>
+
+  <table class="w-full text-left border">
+    <thead>
+      <tr class="bg-gray-100">
+        <th class="border p-2">ID</th>
+        <th class="border p-2">Name</th>
+        <th class="border p-2">Location</th>
+        <th class="border p-2">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let property of properties">
+        <td class="border p-2">{{ property.id }}</td>
+        <td class="border p-2">{{ property.name }}</td>
+        <td class="border p-2">{{ property.location }}</td>
+        <td class="border p-2">
+          <button class="text-blue-600" (click)="edit(property.id)">Edit</button> |
+          <button class="text-red-600" (click)="delete(property.id)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

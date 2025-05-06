@@ -1,0 +1,24 @@
+<div class="max-w-md mx-auto mt-10 p-6 bg-white rounded shadow">
+  <h2 class="text-xl font-semibold mb-4">Register</h2>
+
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+    <div class="mb-4">
+      <label>Name</label>
+      <input type="text" formControlName="name" class="w-full p-2 border rounded" />
+    </div>
+
+    <div class="mb-4">
+      <label>Email</label>
+      <input type="email" formControlName="email" class="w-full p-2 border rounded" />
+    </div>
+
+    <div class="mb-4">
+      <label>Password</label>
+      <input type="password" formControlName="password" class="w-full p-2 border rounded" />
+    </div>
+
+    <button class="bg-green-600 text-white px-4 py-2 rounded" type="submit">Register</button>
+
+    <p class="text-red-500 mt-2" *ngIf="error">{{ error }}</p>
+  </form>
+</div>

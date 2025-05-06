@@ -1,0 +1,31 @@
+<div class="p-4">
+  <h2 class="text-xl font-semibold mb-4">Tenants</h2>
+
+  <button routerLink="/tenants/add" class="bg-green-600 text-white px-3 py-2 rounded mb-4">
+    + Add Tenant
+  </button>
+
+  <table class="w-full border">
+    <thead class="bg-gray-100">
+      <tr>
+        <th class="border p-2">ID</th>
+        <th class="border p-2">Name</th>
+        <th class="border p-2">Email</th>
+        <th class="border p-2">Property ID</th>
+        <th class="border p-2">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let tenant of tenants">
+        <td class="border p-2">{{ tenant.id }}</td>
+        <td class="border p-2">{{ tenant.name }}</td>
+        <td class="border p-2">{{ tenant.email }}</td>
+        <td class="border p-2">{{ tenant.property_id }}</td>
+        <td class="border p-2">
+          <button (click)="edit(tenant.id)" class="text-blue-600">Edit</button> |
+          <button (click)="delete(tenant.id)" class="text-red-600">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

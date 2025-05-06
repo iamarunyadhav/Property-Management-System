@@ -1,0 +1,22 @@
+<div class="p-6">
+  <h2 class="text-xl font-bold mb-4">Rent Calculations</h2>
+
+  <table class="w-full border">
+    <thead class="bg-gray-100">
+      <tr>
+        <th class="p-2 border">Tenant</th>
+        <th class="p-2 border">Property</th>
+        <th class="p-2 border">Rent Amount</th>
+        <th class="p-2 border">Due Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let rent of results">
+        <td class="p-2 border">{{ rent.tenant_name }}</td>
+        <td class="p-2 border">{{ rent.property_name }}</td>
+        <td class="p-2 border">{{ rent.amount }}</td>
+        <td class="p-2 border">{{ rent.due_date }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
